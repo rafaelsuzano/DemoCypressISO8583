@@ -1,29 +1,105 @@
-# Demo Cypress ISO8583
 
 
-Projeto Cypress para Testar e Validar Mensagens ISO 8583
-Este guia detalhado irá orientá-lo na criação de um projeto Cypress robusto para testar e validar mensagens no padrão ISO 8583, uma necessidade comum em sistemas de transações financeiras. Abordaremos desde a configuração do ambiente até a escrita de testes automatizados que simulam a comunicação e validam a estrutura e o conteúdo das mensagens.
+# API de Pagamento e ISO 8583
 
-Entendendo o Desafio: Testando ISO 8583
-O padrão ISO 8583 define o formato de mensagens para transações financeiras eletrônicas. Testar sistemas que utilizam este padrão envolve mais do que simplesmente verificar interfaces de usuário. É crucial garantir que as mensagens trocadas entre os sistemas (como um Ponto de Venda e um autorizador de transações) estejam corretamente formatadas, contenham os dados corretos e sigam as regras de negócio estabelecidas.
+Este projeto é uma API RESTful de simulação de transações de pagamento. Ele foi desenvolvido em **Node.js** com **Express.js** e incorpora validações essenciais de cartão de crédito, como o **Algoritmo de Luhn** e a verificação de **data de expiração**.
 
-Um projeto de teste eficaz para ISO 8583 deve ser capaz de:
+A aplicação também inclui um conjunto de testes automatizados com **Cypress**, que valida o comportamento da API em diversos cenários, seguindo as regras básicas do padrão **ISO 8583**.
 
-Gerar mensagens ISO 8583: Para simular requisições de transação.
+-----
 
-Interpretar (parsear) mensagens ISO 8583: Para validar as respostas recebidas.
+## 🚀 Como Rodar o Projeto
 
-Simular um endpoint (servidor TCP): Para atuar como o outro lado da comunicação, recebendo e enviando mensagens.
+Siga estas instruções para configurar e executar a aplicação localmente.
 
-Integrar a lógica de teste com um framework de automação: Como o Cypress, para orquestrar os testes e realizar asserções.
+### Pré-requisitos
 
-Tecnologias Utilizadas
-Para este projeto, utilizaremos as seguintes tecnologias:
+  * **Node.js**
+  * **npm** ou **yarn**
 
-Cypress: Um framework de testes de front-end e API baseado em JavaScript, conhecido por sua facilidade de uso e poderosas funcionalidades.
+### Instalação
 
-Node.js: Essencial para executar o Cypress e para utilizarmos bibliotecas de manipulação de mensagens ISO 8583.
+1.  Clone o repositório:
+    ```bash
+    git clone https://github.com/rafaelsuzano/DemoCypressISO8583.git
+    cd DemoCypressISO8583
+    ```
+2.  Instale as dependências:
+    ```bash
+    npm install
+    ```
 
-Bibliotecas Node.js para ISO 8583: Como iso_8583 ou iso8583-js, que facilitam a criação e a interpretação de mensagens no padrão.
+### Execução
 
-Servidor TCP Mock em Node.js: Para simular a comunicação via socket.
+Para iniciar o servidor da API, execute o seguinte comando:
+
+```bash
+npm start
+```
+
+O servidor estará rodando em `http://localhost:3000`.
+
+-----
+
+## 📌 Endpoints da API
+
+A API expõe o seguinte endpoint para processamento de pagamentos.
+
+### `POST /payment`
+
+Processa uma transação de pagamento.
+
+**Corpo da Requisição:**
+
+```json
+{
+  "cardNumber": "string",       // Número do cartão (13 a 19 dígitos)
+  "expiryMonth": "number",      // Mês de expiração (1-12)
+  "expiryYear": "number",       // Ano de expiração (ano atual ou futuro)
+  "amount": "number"            // Valor da transação
+}
+```
+
+**Respostas:**
+
+  * **`200 OK`**: Pagamento processado com sucesso.
+  * **`400 Bad Request`**: Dados de pagamento inválidos ou incompletos.
+
+-----
+
+## 🧪 Testes Automatizados com Cypress
+
+O projeto inclui testes de API que validam todos os cenários de pagamento definidos em um arquivo de fixture.
+
+### Como Rodar os Testes
+
+1.  Certifique-se de que o servidor da API está rodando (`npm start`).
+2.  Inicie o Cypress em modo interativo:
+    ```bash
+    npx cypress open
+    ```
+3.  Na interface do Cypress, clique no arquivo de teste `apiPayment.cy.js` para executar os testes.
+
+### Estrutura dos Testes
+
+Os testes usam um **arquivo de fixture (`cypress/fixtures/paymentData.json`)** para cobrir os seguintes cenários:
+
+  * Pagamento válido.
+  * Número de cartão com falha no **Algoritmo de Luhn**.
+  * Número de cartão com formato inválido.
+  * Cartão expirado (verificação por mês e ano).
+  * Dados de requisição incompletos.
+
+-----
+
+## 🛠️ Tecnologias Utilizadas
+
+  * **Node.js**: Ambiente de execução JavaScript.
+  * **Express.js**: Framework para construção da API.
+  * **`body-parser`**: Middleware para processar o corpo das requisições JSON.
+  * **Cypress**: Framework de testes end-to-end.
+  * **`cypress-plugin-api`**: Plugin para otimizar os testes de API.
+
+-----
+
+Se precisar de ajuda para ajustar o código ou para qualquer outra coisa, é só me avisar.
