@@ -18,6 +18,11 @@
   },
   "homepage": "https://github.com/rafaelsuzano/DemoCypressISO8583#readme",
   "dependencies": {
-    "cypress": "^14.5.3"
+    "body-parser": "^2.2.0",
+    "cypress": "^14.5.3",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "cypress-plugin-api": "^2.11.2"
   }
 }

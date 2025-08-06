@@ -1,0 +1,37 @@
+[
+  {
+    "description": "dados de pagamento válidos",
+    "data": {
+      "cardNumber": "5386612463121371",
+      "expiryMonth": 12,
+      "expiryYear": 2028,
+      "amount": 100.50
+    },
+    "expectedStatus": 200,
+    "expectedMessage": "Pagamento recebido e processado com sucesso."
+  },
+  {
+    "description": "número de cartão inválido (Falha no Luhn)",
+    "data": {
+      "cardNumber": "49927398715",
+      "expiryMonth": 12,
+      "expiryYear": 2028,
+      "amount": 100.50
+    },
+    "expectedStatus": 400,
+    "expectedMessage": "Formato do número do cartão inválido. O número deve ter entre 13 e 19 dígitos."
+  },
+
+
+    {
+    "description": "Sem valor",
+    "data": {
+      "cardNumber": "49927398715",
+      "expiryMonth": 12,
+      "expiryYear": 2028,
+      "amount": null
+    },
+    "expectedStatus": 400,
+    "expectedMessage": "Dados de pagamento incompletos. Verifique se todos os campos estão presentes."
+  }
+]
