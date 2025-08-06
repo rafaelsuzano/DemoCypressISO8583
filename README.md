@@ -34,7 +34,7 @@ Siga estas instruções para configurar e executar a aplicação localmente.
 Para iniciar o servidor da API, execute o seguinte comando:
 
 ```bash
-npm start
+node app.js
 ```
 
 O servidor estará rodando em `http://localhost:3000`.
